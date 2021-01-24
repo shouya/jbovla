@@ -1,0 +1,4 @@
+
+** Build
+
+You need to have [[https://deno.land/][deno]] installed to build the dictionary because the build script is written in deno-flavored JavaScript.
