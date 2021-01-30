@@ -1,3 +1,8 @@
+Object.defineProperty(Array.prototype, 'yield_self', {
+ enumerable: false,
+ value: function(f) { return f(this); }
+});
+
 function zbasu(vlaste, jalge) {
   for (var valsi of vlaste.liste()) {
     if (valsi.klesi != "gismu") {
@@ -23,10 +28,25 @@ function cleanse_smuni(smuni) {
   return smuni;
 }
 
+function extract_rafsi(rafsi) {
+  return rafsi
+    .map(x => `<span class="rafsi">${x}<span>`)
+    .join('')
+    .yield_self(x => `<span class="rafsi-list">$x</span>`);
+}
+
 function produce_body(valsi) {
   var {smuni} = valsi;
 
-  return cleanse_smuni(smuni);
+  return [
+    cleanse_smuni(smuni),
+    extract_rafsi(rafsi),
+    etymology(rafsi)
+  ].join('');
+}
+
+function etymology(lang) {
+
 }
 
 function cupra(valsi) {
