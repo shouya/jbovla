@@ -1,8 +1,3 @@
-Object.defineProperty(Array.prototype, 'yield_self', {
- enumerable: false,
- value: function(f) { return f(this); }
-});
-
 function zbasu(vlaste, jalge) {
   for (var valsi of vlaste.liste()) {
     if (valsi.klesi != "gismu") {
@@ -29,24 +24,62 @@ function cleanse_smuni(smuni) {
 }
 
 function extract_rafsi(rafsi) {
-  return rafsi
-    .map(x => `<span class="rafsi">${x}<span>`)
-    .join('')
-    .yield_self(x => `<span class="rafsi-list">$x</span>`);
+  const result = rafsi
+    .map(x => `<span class="rafsi">${x}</span>`)
+        .join('');
+  return `<span class="rafsi-list">${result}</span>`;
 }
 
 function produce_body(valsi) {
-  var {smuni} = valsi;
+  var {smuni, rafsi, cmene} = valsi;
 
   return [
     cleanse_smuni(smuni),
     extract_rafsi(rafsi),
-    etymology(rafsi)
+    etymology(cmene)
   ].join('');
 }
 
-function etymology(lang) {
+const ETYMOLOGY_LANGUAGES = ["zh", "hi", "en", "es", "ru"];
 
+function etymology(word) {
+  for (const lang of ETYMOLOGY_LANGUAGES) {
+    if (typeof window.etymology == 'undefined' ||
+        typeof window.etymology[lang] == 'undefined') {
+      load_etymology(lang);
+    }
+  }
+
+  const result = ["zh", "hi", "en", "es", "ru"]
+    .map(lang => {
+      const source = window.etymology[lang][word];
+      if (source) {
+        return `<li class="etymology-${lang}">${source}</li>`;
+      } else {
+        return null;
+      }
+    })
+    .filter(x => !!x)
+    .join('');
+
+  return `<ul class="etymology">${result}</ul>`;
+}
+
+function load_etymology(lang) {
+  const data_file = `assets/etymology/${lang}/lojban-source-words_${lang}.txt`;
+  if (typeof window.etymology == 'undefined') {
+    window.etymology = {};
+  }
+  window.etymology[lang] = {};
+
+  Deno.readTextFileSync(data_file)
+    .split('\n')
+    .map(line => line.split('\t'))
+    .forEach(fields => {
+      const name = fields[0];
+      const origin = fields[3];
+      window.etymology[lang][name] = origin;
+    });
 }
 
 function cupra(valsi) {
