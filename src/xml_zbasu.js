@@ -1,4 +1,6 @@
 import gismu from "./gismu.js";
+import cmavo from "./cmavo.js";
+
 import { Element } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
 class Vlaste {
@@ -55,6 +57,7 @@ function zbasu() {
     var jalge = new VlasteJalge();
 
     gismu.zbasu(vlaste, jalge);
+    cmavo.zbasu(vlaste, jalge);
 
     console.log(jalge.zbasu_xml());
 }
