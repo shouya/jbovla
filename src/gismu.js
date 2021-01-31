@@ -1,6 +1,15 @@
+function escape(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function zbasu(vlaste, jalge) {
   for (var valsi of vlaste.liste()) {
-    if (valsi.klesi != "gismu") {
+    if (["gismu", "experimental gismu"].includes(valsi.klesi)) {
       continue;
     }
     let selkemyvlaste = cupra(valsi);
@@ -9,8 +18,14 @@ function zbasu(vlaste, jalge) {
 }
 
 function cleanse_smuni(smuni) {
+  if (!smuni) {
+    return null;
+  }
+
+  smuni = escape(smuni);
+
   // remove unnecessary prefix
-  smuni = smuni.replace(/^(adjective:) /, '');
+  smuni = smuni.replaceAll(/^(adjective:) /g, '');
 
   // recognize sumti places
   const terbri_regex = /\$([a-z]+)_\{(\d+)\}\$/g;
@@ -31,7 +46,10 @@ function extract_rafsi(rafsi) {
 }
 
 function cleanse_pinka(pinka) {
-  return `<span class="note">${pinka}</span>`;
+  if (!pinka) {
+    return null;
+  }
+  return `<span class="note">${escape(pinka)}</span>`;
 }
 
 function produce_body(valsi) {
