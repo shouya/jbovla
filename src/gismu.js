@@ -42,7 +42,7 @@ function produce_body(valsi) {
     extract_rafsi(rafsi),
     cleanse_pinka(pinka),
     etymology(cmene)
-  ].join('\n');
+  ].filter(x => !!x).join('\n');
 }
 
 const ETYMOLOGY_LANGUAGES = ["zh", "hi", "en", "es", "ru"];
