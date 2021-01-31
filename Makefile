@@ -16,7 +16,7 @@ DESTINATION_DIR = ~/Library/Dictionaries
 
 all: $(DICT_TARGET)
 
-$(DICT_SRC_PATH): src/*.js
+$(DICT_SRC_PATH): src/*.js $(DICT_CSS_PATH)
 	deno run --allow-read=assets/ src/xml_zbasu.js >$@
 
 $(DICT_TARGET): $(DICT_SRC_PATH)

@@ -1,0 +1,7 @@
+.rafsi-list {
+    float: right;
+}
+
+.experimental-mark::after {
+    content: '*';
+}

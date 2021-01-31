@@ -35,6 +35,11 @@ function cleanse_smuni(smuni) {
     .replaceAll(terbri_regex, basti)
     .replaceAll(terbri_regex2, basti);
 
+  // split by newlines
+  smuni = smuni.split('\n')
+    .map(x => `<p>${x}</p>`)
+    .join('');
+
   return smuni;
 }
 
@@ -45,22 +50,33 @@ function extract_rafsi(rafsi) {
   if (!result) {
     return null;
   }
-  return `<span class="rafsi-list">${result}</span>`;
+  return `<div class="rafsi-list">${result}</div>`;
 }
 
 function cleanse_pinka(pinka) {
   if (!pinka) {
     return null;
   }
-  return `<span class="note">${escape(pinka)}</span>`;
+  return `<p class="note">${escape(pinka)}</p>`;
+}
+
+function make_heading(valsi) {
+  var {cmene, klesi} = valsi;
+
+  if (klesi.includes('experimental')) {
+    cmene += '<span class="experimental-mark"></span>';
+  }
+
+  return `<h1>${cmene}</h1>`;
 }
 
 function produce_body(valsi) {
   var {smuni, rafsi, cmene, pinka} = valsi;
 
   return [
-    cleanse_smuni(smuni),
+    make_heading(valsi),
     extract_rafsi(rafsi),
+    cleanse_smuni(smuni),
     cleanse_pinka(pinka),
     etymology(cmene)
   ].filter(x => !!x).join('\n');
