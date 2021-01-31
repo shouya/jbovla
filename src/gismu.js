@@ -1,11 +1,4 @@
-function escape(unsafe) {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
+import { escape, format_terbri } from './util.js';
 
 function zbasu(vlaste, jalge) {
   for (var valsi of vlaste.liste()) {
@@ -27,13 +20,8 @@ function cleanse_smuni(smuni) {
   // remove unnecessary prefix
   smuni = smuni.replaceAll(/^(adjective:) /g, '');
 
-  // recognize sumti places
-  const terbri_regex = /\$([a-z]+)_\{(\d+)\}\$/g;
-  const terbri_regex2 = /\$([a-z]+)_(\d+)\$/g;
-  const basti = "<span class=\"terbri\">$1<sub>$2</sub></span>";
-  smuni = smuni
-    .replaceAll(terbri_regex, basti)
-    .replaceAll(terbri_regex2, basti);
+  // format sumti places
+  smuni = format_terbri(smuni);
 
   // split by newlines
   smuni = smuni.split('\n')
