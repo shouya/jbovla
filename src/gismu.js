@@ -9,7 +9,7 @@ function escape(unsafe) {
 
 function zbasu(vlaste, jalge) {
   for (var valsi of vlaste.liste()) {
-    if (["gismu", "experimental gismu"].includes(valsi.klesi)) {
+    if (!["gismu", "experimental gismu"].includes(valsi.klesi)) {
       continue;
     }
     let selkemyvlaste = cupra(valsi);
@@ -40,8 +40,11 @@ function cleanse_smuni(smuni) {
 
 function extract_rafsi(rafsi) {
   const result = rafsi
-    .map(x => `<span class="rafsi">${x}</span>`)
+        .map(x => `<span class="rafsi">${x}</span>`)
         .join('');
+  if (!result) {
+    return null;
+  }
   return `<span class="rafsi-list">${result}</span>`;
 }
 
@@ -84,6 +87,10 @@ function etymology(word) {
     })
     .filter(x => !!x)
     .join('');
+
+  if (!result) {
+    return null;
+  }
 
   return `<ul class="etymology">${result}</ul>`;
 }
