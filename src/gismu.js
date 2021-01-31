@@ -30,14 +30,19 @@ function extract_rafsi(rafsi) {
   return `<span class="rafsi-list">${result}</span>`;
 }
 
+function cleanse_pinka(pinka) {
+  return `<span class="note">${pinka}</span>`;
+}
+
 function produce_body(valsi) {
-  var {smuni, rafsi, cmene} = valsi;
+  var {smuni, rafsi, cmene, pinka} = valsi;
 
   return [
     cleanse_smuni(smuni),
     extract_rafsi(rafsi),
+    cleanse_pinka(pinka),
     etymology(cmene)
-  ].join('');
+  ].join('\n');
 }
 
 const ETYMOLOGY_LANGUAGES = ["zh", "hi", "en", "es", "ru"];
