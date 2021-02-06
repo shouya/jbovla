@@ -7,6 +7,8 @@ DICT_PLIST_PATH = jbovla.plist
 DICT_BUILD_TOOL_DIR = ./dev-kit
 DICT_BUILD_TOOL_BIN = $(DICT_BUILD_TOOL_DIR)/bin
 
+DICT_BAI_INDEX_TARGET = ./build/bai.json
+
 DICT_DEV_KIT_OBJ_DIR = ./build/objects
 export DICT_DEV_KIT_OBJ_DIR
 
@@ -16,7 +18,10 @@ DESTINATION_DIR = ~/Library/Dictionaries
 
 all: $(DICT_TARGET)
 
-$(DICT_SRC_PATH): src/*.js $(DICT_CSS_PATH)
+$(DICT_BAI_INDEX_TARGET): src/bai.js
+	deno run --allow-read=assets/ src/bai.js > $@
+
+$(DICT_SRC_PATH): src/*.js $(DICT_CSS_PATH) $(DICT_BAI_INDEX_TARGET)
 	deno run --allow-read=assets/ src/xml_zbasu.js >$@
 
 $(DICT_TARGET): $(DICT_SRC_PATH)

@@ -1,7 +1,7 @@
-import { escape, format_terbri } from './util.js';
+import { escape, format_terbri, Vlaste } from './util.js';
 
-function zbasu(vlaste, jalge) {
-  for (var valsi of vlaste.liste()) {
+function zbasu(jalge) {
+  for (var valsi of Vlaste.instance().liste()) {
     if (!["cmavo", "experimental cmavo"].includes(valsi.klesi)) {
       continue;
     }

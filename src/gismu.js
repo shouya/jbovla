@@ -1,7 +1,7 @@
-import { escape, format_terbri } from './util.js';
+import { escape, format_terbri, Vlaste } from './util.js';
 
-function zbasu(vlaste, jalge) {
-  for (var valsi of vlaste.liste()) {
+function zbasu(jalge) {
+  for (var valsi of Vlaste.instance().liste()) {
     if (!["gismu", "experimental gismu"].includes(valsi.klesi)) {
       continue;
     }
@@ -63,11 +63,11 @@ function produce_body(valsi) {
 
   return [
     make_heading(valsi),
-    extract_rafsi(rafsi),
     cleanse_smuni(smuni),
+    extract_rafsi(rafsi),
     cleanse_pinka(pinka),
     etymology(cmene)
-  ].filter(x => !!x).join('\n');
+  ].filter(x => !!x).join('');
 }
 
 const ETYMOLOGY_LANGUAGES = ["zh", "hi", "en", "es", "ru"];

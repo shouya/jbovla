@@ -1,3 +1,27 @@
+export class Vlaste {
+  static init() {
+    window.vlaste = new Vlaste("assets/vlacku.dict");
+  }
+
+  static instance() {
+    if (!!window.vlaste) {
+      return window.vlaste;
+    } else {
+      this.init();
+      return window.vlaste;
+    }
+  }
+
+  constructor(sfaile) {
+    this.entries = JSON.parse(Deno.readTextFileSync(sfaile));
+    window.vlaste = this;
+  }
+
+  liste() {
+    return this.entries;
+  }
+}
+
 export function escape(unsafe) {
   return unsafe
     .replace(/&/g, "&amp;")
