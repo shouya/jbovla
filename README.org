@@ -1,4 +1,17 @@
+* Dictionary
+
+Abandonware notice:
+
+I was trying build this macOS dictionary using developer kit in this project. The goal is to make a customized dictionary according to my preference. Turns out macOS dictionary is a bit less capable to fulfill my needs. So I gave this project up.
+
+For alternation, you may want to look at:
+
+- guskant's Lojban dictionary (https://guskant.github.io/lojbo/stardict.html): a very nice and comprehensive dictionary
+- DictUnifier (https://github.com/jjgod/mac-dictionary-kit): you can use this tool to convert guskant's dictionary to macOS dictionary format
+- gernytci (https://github.com/shouya/gernytci): I implement some of my ideas in this cli tool
 
 ** Build
 
 You need to have [[https://deno.land/][deno]] installed to build the dictionary because the build script is written in deno-flavored JavaScript.
+
+Run `make` to build the dictionary. Then run `make install` to install it to user dictionary directory.
